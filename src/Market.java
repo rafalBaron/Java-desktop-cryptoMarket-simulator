@@ -1,22 +1,34 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class Market extends  JPanel {
+public class Market extends JPanel {
+
+    ArrayList<Crypto> features = new ArrayList<>();
 
     public Market() throws IOException {
         super();
         this.setBackground(new Color(31,27,54));
+        this.setBorder(new EmptyBorder(20,0,20,0));
+        features.add(new Crypto("BTC/USDT"));
+        features.add(new Crypto("BTC/BNB"));
+        features.add(new Crypto("BNB/ETH"));
+        features.add(new Crypto("BTC/ETH"));
+        features.add(new Crypto("ETH/ITP"));
+        features.add(new Crypto("ETH/CDD"));
+
+        JPanel kursy = new JPanel(new GridLayout(3,2,30,30));
+        kursy.setBackground(new Color(31,27,54));
+        for (Crypto c : features
+             ) {
+            kursy.add(c);
+        }
+        this.add(kursy, BorderLayout.CENTER);
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-
-        g2d.setColor(Color.WHITE);
-        g2d.drawString("MARKET",300,300);
-    }
 }

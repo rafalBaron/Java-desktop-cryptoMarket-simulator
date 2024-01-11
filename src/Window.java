@@ -18,7 +18,7 @@ public class Window extends JFrame implements ActionListener {
     User user = new User();
     Settings settings = new Settings();
 
-    BufferedImage iconMarket = ImageIO.read(new File("src/Img/button_market.png"));
+    BufferedImage iconMarket = ImageIO.read(new File("src/Img/button_market_clicked.png"));
     JButton marketButton = new JButton(new ImageIcon(iconMarket));
 
 
