@@ -1,12 +1,15 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Crypto extends JPanel {
 
+    private boolean hovered = false;
     String exchange;
     int x,y;
 
@@ -15,17 +18,30 @@ public class Crypto extends JPanel {
         this.exchange = exchange;
         this.setPreferredSize(new Dimension(350,150));
         this.add(new Label(this.exchange));
+
+        JPanel liveData = new JPanel(new FlowLayout(1,40,5));
+        liveData.setPreferredSize(new Dimension(348,50));
+        this.add(liveData);
+        JPanel liveData1 = new JPanel(new FlowLayout(1,20,15));
+        liveData1.setPreferredSize(new Dimension(348,30));
+        this.add(liveData1);
+        addMouseListener(new MouseAdapter() {
+
+        });
+
+        ApiStrike api = new ApiStrike(liveData,liveData1,this.exchange.substring(0,3));
+        api.execute();
     }
 
     protected void paintComponent(Graphics g) {
 
         BufferedImage bi = new BufferedImage(350, 150, BufferedImage.TYPE_INT_ARGB);
         Graphics2D gb = bi.createGraphics();
-        gb.setPaint(new Color(59, 53, 97));
+        gb.setPaint(new Color(40, 35, 65));
         gb.fillRect(0, 0, 350, 150);
         gb.dispose();
 
-        RoundRectangle2D r = new RoundRectangle2D.Float(0, 0, 350, 150, 40, 40);
+        RoundRectangle2D r = new RoundRectangle2D.Float(0, 0, 350, 150, 25, 25);
         g.setClip(r);
 
         g.drawImage(bi, 0, 0, null);

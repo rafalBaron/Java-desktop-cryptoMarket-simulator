@@ -8,7 +8,13 @@ public class Label extends JLabel {
 
     Label(String text) {
         super(text);
-        this.setForeground(new Color(255,255,255));
-        this.setFont(new Font("Ubuntu",Font.BOLD,16));
+        setForeground(new Color(31, 27, 54));
+        setFont(new Font("Ubuntu",Font.BOLD,16));
+        setBackground(new Color(255,215,0));
+        setOpaque(true);
+        setPreferredSize(new Dimension(120,30));
+        setHorizontalAlignment(SwingConstants.CENTER);
+        setVerticalAlignment(SwingConstants.CENTER);
     }
+
 }

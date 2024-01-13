@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "uid": "1",
+      "username": "admin",
+      "password": "admin",
+      "portfolio": {
+        "cryptocurrencies": [
+          {
+            "symbol": "BTC",
+            "color": {
+              "red": 255,
+              "green": 0,
+              "blue": 0
+            },
+            "purchasePrice": 50000.0,
+            "quantity": 2.5
+          },
+          {
+            "symbol": "ETH",
+            "color": {
+              "red": 0,
+              "green": 255,
+              "blue": 0
+            },
+            "purchasePrice": 3000.0,
+            "quantity": 5.0
+          },
+          {
+            "symbol": "LTC",
+            "color": {
+              "red": 0,
+              "green": 0,
+              "blue": 255
+            },
+            "purchasePrice": 150.0,
+            "quantity": 20.0
+          }
+        ],
+        "balance": 10000.0
+      }
+    }
+  ]
+}

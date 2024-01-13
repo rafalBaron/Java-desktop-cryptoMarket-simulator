@@ -16,5 +16,9 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="knowm.xchart" level="project" />
+    <orderEntry type="library" name="knowm.xchart.demo" level="project" />
+    <orderEntry type="library" name="fasterxml.jackson.core.annotations" level="project" />
+    <orderEntry type="library" name="fasterxml.jackson.core.databind" level="project" />
   </component>
 </module>
