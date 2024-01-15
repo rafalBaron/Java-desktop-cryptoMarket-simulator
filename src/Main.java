@@ -1,6 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,41 @@ public class Main {
         if (logType != 3) {
             SwingUtilities.invokeLater(() -> {
                 try {
-                    new Window(logType);
+                    if (logType == 0) {
+                        LoginForm loginForm = new LoginForm();
+                        loginForm.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                Account loggedInUser = loginForm.getLoggedUser();
+                                try {
+                                    new Window(loggedInUser);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+                        });
+                    } else if (logType == 1){
+                        RegisterForm regForm = new RegisterForm();
+                        regForm.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                LoginForm loginForm = new LoginForm();
+                                loginForm.addWindowListener(new WindowAdapter() {
+                                    @Override
+                                    public void windowClosed(WindowEvent e) {
+                                        Account loggedInUser = loginForm.getLoggedUser();
+                                        try {
+                                            new Window(loggedInUser);
+                                        } catch (IOException ex) {
+                                            throw new RuntimeException(ex);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        new Window(null);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -25,8 +61,8 @@ public class Main {
         Object[] options = {"Login", "Register", "Guest"};
         int choice = JOptionPane.showOptionDialog(
                 null,
-                "Choose an option:",
-                "Login or Register",
+                "Login, register or enter as a quest!",
+                "Welcome!",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
@@ -41,7 +77,6 @@ public class Main {
             case 2:
                 return 2;
             default:
-                System.out.println("Canceled");
                 return 3;
         }
     }

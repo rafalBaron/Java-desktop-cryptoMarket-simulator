@@ -8,6 +8,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.Map;
 
 class ApiStrike extends SwingWorker<Void, String> {
 
@@ -35,6 +39,7 @@ class ApiStrike extends SwingWorker<Void, String> {
         }
         return null;
     }
+
 
     @Override
     protected void process(java.util.List<String> chunks) {
@@ -76,9 +81,9 @@ class ApiStrike extends SwingWorker<Void, String> {
             labelWol.setForeground(Color.GRAY);
 
 
-            panel.setBackground(new Color(40, 35, 65));
+            panel.setBackground(new Color(44, 39, 73));
             panel1.setBackground(new Color(40, 35, 65));
-            panel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
+            panel.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
             panel.removeAll();
             panel1.removeAll();
             panel.add(labelCost);

@@ -6,10 +6,15 @@ import java.awt.event.ActionListener;
 public class LoginForm extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private DBHandler dbHandler;
+    private Account loggedInUser = null;
 
     public LoginForm() {
-        super("Login Form");
+        super("CryptoMarket | Login");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setPreferredSize(new Dimension(500,500));
+
+        dbHandler = new DBHandler();
 
         initUI();
 
@@ -26,6 +31,13 @@ public class LoginForm extends JFrame {
         usernameField = new JTextField();
         passwordField = new JPasswordField();
 
+        usernameLabel.setFont(new Font("Ubuntu",Font.BOLD,15));
+        passwordLabel.setFont(new Font("Ubuntu",Font.BOLD,15));
+
+        usernameField.setPreferredSize(new Dimension(100,50));
+        passwordField.setPreferredSize(new Dimension(100,50));
+
+
         panel.add(usernameLabel);
         panel.add(usernameField);
         panel.add(passwordLabel);
@@ -35,11 +47,19 @@ public class LoginForm extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Tutaj umieść kod logowania
-                String username = usernameField.getText();
-                char[] password = passwordField.getPassword();
-                System.out.println("Logging in as " + username);
-                dispose();
+                String enteredUsername = usernameField.getText();
+                char[] enteredPassword = passwordField.getPassword();
+                String enteredPasswordString = new String(enteredPassword);
+
+                loggedInUser = dbHandler.getUser(enteredUsername, enteredPasswordString);
+
+                if (loggedInUser != null) {
+                    System.out.println("Login successful for user: " + enteredUsername);
+                    dispose();
+                } else {
+                    System.out.println("Invalid username or password");
+                    JOptionPane.showMessageDialog(LoginForm.this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -55,5 +75,9 @@ public class LoginForm extends JFrame {
         panel.add(cancelButton);
 
         add(panel);
+    }
+
+    public Account getLoggedUser() {
+        return loggedInUser;
     }
 }

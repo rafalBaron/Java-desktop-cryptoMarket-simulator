@@ -2,12 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BanerInfo extends JPanel {
-    String balance,userName;
+    Double balance;
+    String userName;
 
     BanerInfo(Account userAccount) {
         super();
-        this.balance = "10000";
-        this.userName = "brendi2832";
+        this.balance = userAccount.getWallet().getBalance();
+        this.userName = userAccount.getUserName();
         setPreferredSize(new Dimension(630,110));
         setLayout(new BorderLayout());
         setBackground(new Color(255,215,0));

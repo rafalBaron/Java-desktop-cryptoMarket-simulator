@@ -18,6 +18,17 @@ class RoundedPanel extends JPanel {
         setOpaque(true);
     }
 
+    public RoundedPanel(int cornerRadius, Color color, int width, int height,int layout) {
+        super();
+        this.cornerRadius = cornerRadius;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.setLayout(new BoxLayout(this,layout));
+        setPreferredSize(new Dimension(width,height));
+        setOpaque(true);
+    }
+
     protected void paintComponent(Graphics g) {
 
         BufferedImage bi = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);

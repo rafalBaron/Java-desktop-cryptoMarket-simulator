@@ -2,21 +2,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    private List<User> users;
+    private List<Account> accounts;
 
     public Database() {
-        this.users = new ArrayList<>();
+        this.accounts = new ArrayList<>();
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
-    public void addUser(User user) {
-        users.add(user);
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public Account getUserByUsernameAndPassword(String username, String password) {
+        for (Account account : accounts) {
+            if (account.getUserName().equals(username) && account.getPassword().equals(password)) {
+                return account;
+            }
+        }
+        return null;
     }
 }

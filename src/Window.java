@@ -8,14 +8,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Window extends JFrame {
+public class Window extends JFrame{
 
     CardLayout cardLayout = new CardLayout();
     JPanel cardPanel = new JPanel();
-    Market market = new Market();
+    Account userAcc;
 
-    Portfolio portfolio = new Portfolio(new BorderLayout());
-    User user = new User();
 
     CustomButton marketButton = new CustomButton("MARKET",cardLayout,cardPanel,"Market");
     CustomButton portfolioButton = new CustomButton("PORTFOLIO",cardLayout,cardPanel,"Portfolio");
@@ -23,9 +21,15 @@ public class Window extends JFrame {
 
     Color selfColor;
 
-    Window(int logType) throws IOException {
+    Window(Account userAcc) throws IOException {
         super();
-        this.setTitle("Crypto Market");
+        this.userAcc = userAcc;
+
+        if (userAcc != null) {
+            this.setTitle("CryptoMarket | " + userAcc.getUserName());
+        }else {
+            this.setTitle("CryptoMarket | Guest");
+        }
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(950, 598);
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
@@ -38,6 +42,8 @@ public class Window extends JFrame {
         }
 
         cardPanel.setLayout(cardLayout);
+
+        Market market = new Market(this.userAcc,cardPanel);
 
         marketButton.setBorder(BorderFactory.createEmptyBorder());
 
@@ -59,7 +65,9 @@ public class Window extends JFrame {
         add(buttonPanel, BorderLayout.WEST);
 
         cardPanel.add(market, "Market");
-        if(logType != 2) {
+        if(this.userAcc != null) {
+            Portfolio portfolio = new Portfolio(new BorderLayout(),this.userAcc);
+            User user = new User();
             cardPanel.add(portfolio, "Portfolio");
             cardPanel.add(user, "User");
         }
@@ -67,4 +75,5 @@ public class Window extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
+
 }

@@ -1,21 +1,30 @@
+import org.json.JSONObject;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Crypto extends JPanel {
+public class CryptoBaner extends JPanel implements BuyWindowListener{
 
-    private boolean hovered = false;
     String exchange;
     int x,y;
+    Account userAcc = null;
 
-    Crypto(String exchange){
+    JPanel cardPanel;
+
+    CryptoBaner(String exchange, Account userAcc, JPanel cardPanel){
         super();
+        this.userAcc = userAcc;
         this.exchange = exchange;
+        this.cardPanel = cardPanel;
         this.setPreferredSize(new Dimension(350,150));
         this.add(new Label(this.exchange));
 
@@ -25,13 +34,18 @@ public class Crypto extends JPanel {
         JPanel liveData1 = new JPanel(new FlowLayout(1,20,15));
         liveData1.setPreferredSize(new Dimension(348,30));
         this.add(liveData1);
-        addMouseListener(new MouseAdapter() {
 
-        });
+        if (this.userAcc != null) {
+            BuyButton buyButton = new BuyButton("BUY",this.exchange.substring(0,3));
+            BuyWindow listener = new BuyWindow(this.exchange.substring(0,3),userAcc,1000,cardPanel);
+            buyButton.addActionListener(listener);
+            this.add(buyButton);
+        }
 
         ApiStrike api = new ApiStrike(liveData,liveData1,this.exchange.substring(0,3));
         api.execute();
     }
+
 
     protected void paintComponent(Graphics g) {
 
@@ -45,6 +59,19 @@ public class Crypto extends JPanel {
         g.setClip(r);
 
         g.drawImage(bi, 0, 0, null);
+    }
+
+    @Override
+    public void onBuyComplete() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                cardPanel.revalidate();
+                cardPanel.repaint();
+                cardPanel.validate();
+                cardPanel.doLayout();
+            }
+        });
     }
 
     private static class RoundedBorder implements Border {
@@ -70,5 +97,3 @@ public class Crypto extends JPanel {
         }
     }
 }
-
-
