@@ -32,12 +32,26 @@ public class DBHandler {
     public Account getUser(String username, String password) {
         Database database = readDatabase();
 
-        for (Account account : database.getAccounts()) {
-            if (account.getUserName().equals(username) && account.getPassword().equals(password)) {
-                return account;
+        if (database.getAccounts() != null) {
+            for (Account account : database.getAccounts()) {
+                if (account.getUserName().equals(username) && account.getPassword().equals(password)) {
+                    return account;
+                }
             }
         }
 
+        return null;
+    }
+    public Account getUser(String username) {
+        Database database = readDatabase();
+
+        if (database.getAccounts() != null) {
+            for (Account account : database.getAccounts()) {
+                if (account.getUserName().equals(username)) {
+                    return account;
+                }
+            }
+        }
         return null;
     }
 

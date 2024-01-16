@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class BanerInfo extends JPanel {
@@ -12,13 +13,12 @@ public class BanerInfo extends JPanel {
         setPreferredSize(new Dimension(630,110));
         setLayout(new BorderLayout());
         setBackground(new Color(255,215,0));
-        add(new LabelInfoBar("          "+this.balance+"$"),BorderLayout.WEST);
+        add(new LabelInfoBar("       "+String.format("%.3f",this.balance)+"$"),BorderLayout.WEST);
 
         ImageIcon imageIcon = new ImageIcon("src/Img/icon.png");
         JLabel label = new JLabel(imageIcon);
         label.setPreferredSize(new Dimension(110,110));
         add(label);
-
         add(new LabelInfoBar("@"+this.userName),BorderLayout.EAST);
     }
 

@@ -14,21 +14,17 @@ public class Window extends JFrame{
     JPanel cardPanel = new JPanel();
     Account userAcc;
 
-
     CustomButton marketButton = new CustomButton("MARKET",cardLayout,cardPanel,"Market");
     CustomButton portfolioButton = new CustomButton("PORTFOLIO",cardLayout,cardPanel,"Portfolio");
-    CustomButton userButton = new CustomButton("USER",cardLayout,cardPanel,"User");
-
-    Color selfColor;
 
     Window(Account userAcc) throws IOException {
         super();
         this.userAcc = userAcc;
 
         if (userAcc != null) {
-            this.setTitle("CryptoMarket | " + userAcc.getUserName());
+            this.setTitle("CryptoMarket | @" + userAcc.getUserName());
         }else {
-            this.setTitle("CryptoMarket | Guest");
+            this.setTitle("CryptoMarket | @Guest");
         }
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(950, 598);
@@ -49,15 +45,11 @@ public class Window extends JFrame{
 
         portfolioButton.setBorder(BorderFactory.createEmptyBorder());
 
-        userButton.setBorder(BorderFactory.createEmptyBorder());
-
-
         JPanel buttonPanel = new JPanel();
         GridLayout buttonsLayout = new GridLayout(0,1);
         buttonPanel.setLayout(buttonsLayout);
         buttonPanel.add(marketButton);
         buttonPanel.add(portfolioButton);
-        buttonPanel.add(userButton);
 
         add(cardPanel, BorderLayout.CENTER);
 
@@ -67,9 +59,7 @@ public class Window extends JFrame{
         cardPanel.add(market, "Market");
         if(this.userAcc != null) {
             Portfolio portfolio = new Portfolio(new BorderLayout(),this.userAcc);
-            User user = new User();
             cardPanel.add(portfolio, "Portfolio");
-            cardPanel.add(user, "User");
         }
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

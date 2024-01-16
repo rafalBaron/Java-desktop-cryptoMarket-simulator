@@ -15,7 +15,7 @@ public class RegisterForm extends JFrame {
     public RegisterForm() {
         super("CryptoMarket | Register");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(500,500));
+        setPreferredSize(new Dimension(400,400));
 
         dbHandler = new DBHandler();
 
@@ -39,6 +39,44 @@ public class RegisterForm extends JFrame {
         confirmPasswordField = new JPasswordField();
         balanceField = new JTextField();
 
+        usernameField.setBackground(new Color(31,27,54));
+        passwordField.setBackground(new Color(31,27,54));
+        confirmPasswordField.setBackground(new Color(31,27,54));
+        balanceField.setBackground(new Color(31,27,54));
+
+        usernameField.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+        passwordField.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+        confirmPasswordField.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+        balanceField.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+
+        usernameField.setFont(new Font("Ubuntu",Font.BOLD,15));
+        usernameField.setForeground(new Color(255,215,0));
+
+        passwordField.setFont(new Font("Ubuntu",Font.BOLD,15));
+        passwordField.setForeground(new Color(255,215,0));
+
+        confirmPasswordField.setFont(new Font("Ubuntu",Font.BOLD,15));
+        confirmPasswordField.setForeground(new Color(255,215,0));
+
+        balanceField.setFont(new Font("Ubuntu",Font.BOLD,15));
+        balanceField.setForeground(new Color(255,215,0));
+
+        usernameLabel.setFont(new Font("Ubuntu",Font.BOLD,15));
+        usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+
+        passwordLabel.setFont(new Font("Ubuntu",Font.BOLD,15));
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+
+        confirmPasswordLabel.setFont(new Font("Ubuntu",Font.BOLD,15));
+        confirmPasswordLabel.setForeground(Color.WHITE);
+        confirmPasswordLabel.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+
+        balanceLabel.setFont(new Font("Ubuntu",Font.BOLD,15));
+        balanceLabel.setForeground(Color.WHITE);
+        balanceLabel.setBorder(BorderFactory.createEmptyBorder(0,35,0,0));
+
         panel.add(usernameLabel);
         panel.add(usernameField);
         panel.add(passwordLabel);
@@ -49,23 +87,24 @@ public class RegisterForm extends JFrame {
         panel.add(balanceField);
 
         JButton registerButton = new JButton("Register");
+        registerButton.setForeground(new Color(31,27,54));
+        registerButton.setFont(new Font("Ubuntu", Font.BOLD,16));
+        registerButton.setBorder(null);
+        registerButton.setFocusPainted(false);
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Tutaj umieść kod rejestracji
                 String userName = usernameField.getText();
                 char[] password = passwordField.getPassword();
                 char[] confirmPassword = confirmPasswordField.getPassword();
                 String balanceText = balanceField.getText();
                 String passwordStr = new String(password);
 
-                // Sprawdź czy hasła się zgadzają
                 if (!Arrays.equals(password, confirmPassword)) {
                     JOptionPane.showMessageDialog(RegisterForm.this, "Passwords do not match", "Registration Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                // Sprawdź czy Starting Balance jest poprawne
                 try {
                     double balance = Double.parseDouble(balanceText);
                     if (balance < 100 || balance > 100000) {
@@ -82,6 +121,10 @@ public class RegisterForm extends JFrame {
         });
 
         JButton cancelButton = new JButton("Cancel");
+        cancelButton.setForeground(new Color(31,27,54));
+        cancelButton.setFont(new Font("Ubuntu", Font.BOLD,16));
+        cancelButton.setBorder(null);
+        cancelButton.setFocusPainted(false);
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

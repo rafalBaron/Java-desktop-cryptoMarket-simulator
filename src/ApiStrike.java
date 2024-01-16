@@ -17,10 +17,10 @@ class ApiStrike extends SwingWorker<Void, String> {
 
     private final JPanel panel;
     private final JPanel panel1;
-
+    Account userAcc;
     String symbol;
 
-    public ApiStrike(JPanel panel,JPanel panel1,String symbol) {
+    public ApiStrike(JPanel panel,JPanel panel1,String symbol, Account userAcc) {
         this.panel = panel;
         this.panel1 = panel1;
         this.symbol = symbol;
@@ -32,7 +32,7 @@ class ApiStrike extends SwingWorker<Void, String> {
             try {
                 String apiResponse = fetchDataFromApi();
                 publish(apiResponse);
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -80,7 +80,6 @@ class ApiStrike extends SwingWorker<Void, String> {
             labelWol.setFont(new Font("Ubuntu",Font.BOLD,13));
             labelWol.setForeground(Color.GRAY);
 
-
             panel.setBackground(new Color(44, 39, 73));
             panel1.setBackground(new Color(40, 35, 65));
             panel.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
@@ -96,6 +95,8 @@ class ApiStrike extends SwingWorker<Void, String> {
             panel.repaint();
             panel1.revalidate();
             panel1.repaint();
+
+            CryptoActualPrices.setCryptoPrices(this.symbol.substring(0,3),cost);
         }
     }
 

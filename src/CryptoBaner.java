@@ -35,15 +35,15 @@ public class CryptoBaner extends JPanel implements BuyWindowListener{
         liveData1.setPreferredSize(new Dimension(348,30));
         this.add(liveData1);
 
+        ApiStrike api = new ApiStrike(liveData,liveData1,this.exchange.substring(0,3),userAcc);
+        api.execute();
+
         if (this.userAcc != null) {
             BuyButton buyButton = new BuyButton("BUY",this.exchange.substring(0,3));
-            BuyWindow listener = new BuyWindow(this.exchange.substring(0,3),userAcc,1000,cardPanel);
+            BuyWindow listener = new BuyWindow(this.exchange.substring(0,3),userAcc,cardPanel);
             buyButton.addActionListener(listener);
             this.add(buyButton);
         }
-
-        ApiStrike api = new ApiStrike(liveData,liveData1,this.exchange.substring(0,3));
-        api.execute();
     }
 
 

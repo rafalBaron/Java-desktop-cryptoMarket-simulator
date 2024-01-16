@@ -8,7 +8,6 @@ public class Market extends JPanel {
 
     ArrayList<CryptoBaner> features = new ArrayList<>();
     Account userAcc = null;
-
     JPanel cardPanel;
 
     public Market(Account userAcc, JPanel cardPanel) throws IOException {

@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PieChart extends JPanel {
@@ -10,7 +9,7 @@ public class PieChart extends JPanel {
     public PieChart(List<Float> values, List<Color> colors) {
         this.values = values;
         this.colors = colors;
-        setPreferredSize(new Dimension(360,360));
+        setPreferredSize(new Dimension(265,265));
         setBackground(new Color(40, 35, 65));
     }
 
@@ -36,6 +35,14 @@ public class PieChart extends JPanel {
                 float angle = (value / total) * 360.0f;
                 g.setColor(colors.get(i));
                 g.fillArc(x, y, diameter, diameter, (int) startAngle, (int) angle);
+
+                g.setColor(Color.BLACK);
+                g.setFont(new Font("Ubuntu",Font.BOLD, 12));
+                double rad = Math.toRadians(startAngle + angle / 2);
+                int textX = (int) (x + radius + radius / 2 * Math.cos(rad));
+                int textY = (int) (y + radius - radius / 2 * Math.sin(rad));
+                String wartosc = String.format("%.2f",value) + "$";
+                g.drawString(wartosc, textX, textY);
 
                 startAngle += angle;
             }

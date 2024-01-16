@@ -7,6 +7,6 @@ public class LabelCryptoList extends JLabel {
         super(text);
         setForeground(color);
         setPreferredSize(new Dimension(60,40));
-        setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
+        setBorder(BorderFactory.createEmptyBorder(0,0,18,0));
     }
 }

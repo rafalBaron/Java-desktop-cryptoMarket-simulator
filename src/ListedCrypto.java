@@ -10,14 +10,15 @@ public class ListedCrypto extends JPanel {
         super();
         this.buyPrice = buyPrice;
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        setPreferredSize(new Dimension(215,40));
+        setPreferredSize(new Dimension(215,35));
         setBackground(new Color(44, 39, 73));
         /*ImageIcon icon = new ImageIcon("src/Img/"+symbol.toLowerCase()+".png");
         add(new JLabel(icon));*/
         setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
         add(new LabelCryptoList(symbol,CryptoColorDictionary.getCryptoColor(symbol)));
         add(new LabelCryptoList(String.valueOf(quantity),Color.WHITE));
-        add(new LabelCryptoList(String.valueOf(buyPrice),Color.WHITE));
+        add(new LabelCryptoList("",Color.WHITE));
+
     }
 
 }

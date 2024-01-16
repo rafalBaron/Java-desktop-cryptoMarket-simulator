@@ -5,9 +5,17 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,15 +27,13 @@ interface BuyWindowListener {
 public class BuyWindow implements ActionListener {
 
     private String symbol;
-    private Account userAcc;
+    Account userAcc;
     double price;
-
     JPanel cardPanel;
 
-    BuyWindow(String symbol, Account userAcc, double price, JPanel cardPanel) {
+    BuyWindow(String symbol, Account userAcc, JPanel cardPanel) {
         this.symbol = symbol;
         this.userAcc = userAcc;
-        this.price = price;
         this.cardPanel = cardPanel;
     }
 
@@ -37,13 +43,33 @@ public class BuyWindow implements ActionListener {
         buy.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         buy.setPreferredSize(new Dimension(300, 300));
 
-        JPanel panel = new JPanel(new GridLayout(3, 1));
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 1));
 
-        JTextField quantityField = new JTextField();
         JButton buyButton = new JButton("Buy");
+        buyButton.setForeground(new Color(31,27,54));
+        buyButton.setBackground(new Color(21, 215, 152));
+        buyButton.setFont(new Font("Ubuntu",Font.BOLD,20));
+        buyButton.setFocusPainted(false);
+        buyButton.setBorder(null);
 
-        panel.add(new JLabel("Enter quantity:"));
+        JLabel balance = new JLabel("   Balance   -   " + String.format("%.3f",userAcc.getWallet().getBalance()) +" $");
+        balance.setForeground(Color.WHITE);
+        balance.setBackground(new Color(31,27,54));
+        balance.setFont(new Font("Ubuntu",Font.BOLD,16));
+        balance.setBorder(null);
+
+        JLabel worth = new JLabel("   Order value   -   ");
+        worth.setForeground(Color.WHITE);
+        worth.setBackground(new Color(31,27,54));
+        worth.setFont(new Font("Ubuntu",Font.BOLD,16));
+        worth.setBorder(null);
+
+        JTextField quantityField = createPlaceholderTextField("Quantity",worth,this.price);
+
+        panel.add(balance);
         panel.add(quantityField);
+        panel.add(worth);
         panel.add(buyButton);
 
         buy.getContentPane().add(panel);
@@ -54,6 +80,7 @@ public class BuyWindow implements ActionListener {
                 String quantityText = quantityField.getText();
                 DBHandler dbHandler = new DBHandler();
                 ObjectMapper objectMapper = new ObjectMapper();
+                price = CryptoActualPrices.getCryptoPrice(symbol);
 
                 try {
                     double quantity = Double.parseDouble(quantityText);
@@ -108,7 +135,7 @@ public class BuyWindow implements ActionListener {
 
                                         objectMapper.writeValue(jsonFilePath.toFile(), rootNode);
                                         buy.dispose();
-                                        break; // Przerwanie pętli po znalezieniu użytkownika
+                                        break;
                                     }
                                 }
                             }
@@ -126,5 +153,64 @@ public class BuyWindow implements ActionListener {
         buy.pack();
         buy.setLocationRelativeTo(null);
         buy.setVisible(true);
+        buyButton.requestFocusInWindow();
     }
+
+    private JTextField createPlaceholderTextField(String placeholder, JLabel worth, Double price) {
+        JTextField textField = new JTextField(15);
+        textField.setText(placeholder);
+        textField.setFont(new Font("Ubuntu",Font.BOLD,15));
+        textField.setForeground(Color.GRAY);
+        textField.setHorizontalAlignment(SwingConstants.CENTER);
+        textField.setBorder(null);
+
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholder);
+                }
+            }
+        });
+
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateLabel();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateLabel();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateLabel();
+            }
+
+            private void updateLabel() {
+                try {
+                    double price = CryptoActualPrices.getCryptoPrice(symbol);
+                    Double value = price * Double.parseDouble(textField.getText());
+
+                    worth.setText("   Order value   -   " +String.format("%.2f", value)+" $");
+                } catch (NumberFormatException ex) {
+                    worth.setText("   Order value   -");
+                }
+            }
+        });
+
+        return textField;
+    }
+
 }
