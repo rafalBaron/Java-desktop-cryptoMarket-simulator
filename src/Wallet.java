@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class Wallet {
     private List<CryptoCurrency> cryptoCurrencies;
@@ -15,6 +16,17 @@ public class Wallet {
 
     public List<CryptoCurrency> getCryptoCurrencies() {
         return cryptoCurrencies;
+    }
+
+    public CryptoCurrency getCrypto(String symbol) {
+
+        for (CryptoCurrency c : cryptoCurrencies
+             ) {
+            if (Objects.equals(c.getSymbol(), symbol)) {
+                return c;
+            }
+        }
+        return null;
     }
 
     public void setCryptoCurrencies(List<CryptoCurrency> cryptoCurrencies) {

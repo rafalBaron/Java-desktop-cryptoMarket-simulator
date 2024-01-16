@@ -155,11 +155,10 @@ public class BuyWindow implements ActionListener {
         buy.setVisible(true);
         buyButton.requestFocusInWindow();
     }
-
     private JTextField createPlaceholderTextField(String placeholder, JLabel worth, Double price) {
         JTextField textField = new JTextField(15);
         textField.setText(placeholder);
-        textField.setFont(new Font("Ubuntu",Font.BOLD,15));
+        textField.setFont(new Font("Ubuntu", Font.BOLD, 15));
         textField.setForeground(Color.GRAY);
         textField.setHorizontalAlignment(SwingConstants.CENTER);
         textField.setBorder(null);
@@ -203,9 +202,9 @@ public class BuyWindow implements ActionListener {
                     double price = CryptoActualPrices.getCryptoPrice(symbol);
                     Double value = price * Double.parseDouble(textField.getText());
 
-                    worth.setText("   Order value   -   " +String.format("%.2f", value)+" $");
+                    worth.setText("   Sell value   -   " + String.format("%.2f", value) + " $");
                 } catch (NumberFormatException ex) {
-                    worth.setText("   Order value   -");
+                    worth.setText("   Sell value   -");
                 }
             }
         });

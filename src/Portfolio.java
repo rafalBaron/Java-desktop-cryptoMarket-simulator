@@ -17,11 +17,13 @@ import java.util.concurrent.ForkJoinPool;
 
 public class Portfolio extends JPanel {
     Account userAccount;
+    JPanel cardpanel;
     RoundedPanel baner, chart, list;
 
-    Portfolio(BorderLayout borderLayout, Account userAccount) throws IOException {
+    Portfolio(BorderLayout borderLayout, Account userAccount,JPanel cardPanel) throws IOException {
         super();
         this.userAccount = userAccount;
+        this.cardpanel = cardPanel;
         this.setBackground(new Color(31,27,54));
 
         initializeComponents();
@@ -189,7 +191,7 @@ public class Portfolio extends JPanel {
         listContent.setLayout(new BoxLayout(listContent, BoxLayout.Y_AXIS));
         if (listaUsera != null) {
             for (CryptoCurrency crypto : listaUsera) {
-                listContent.add(new ListedCrypto(crypto.getSymbol(), crypto.getQuantity(), crypto.getPurchasePrice()));
+                listContent.add(new ListedCrypto(crypto.getSymbol(), crypto.getQuantity(), crypto.getPurchasePrice(),actualAcc,cardpanel));
                 JPanel vGap = new JPanel();
                 vGap.setPreferredSize(new Dimension(215,5));
                 vGap.setBackground(new Color(40, 35, 65));

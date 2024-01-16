@@ -58,7 +58,7 @@ public class Window extends JFrame{
 
         cardPanel.add(market, "Market");
         if(this.userAcc != null) {
-            Portfolio portfolio = new Portfolio(new BorderLayout(),this.userAcc);
+            Portfolio portfolio = new Portfolio(new BorderLayout(),this.userAcc, cardPanel);
             cardPanel.add(portfolio, "Portfolio");
         }
 
